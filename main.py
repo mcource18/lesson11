@@ -3,6 +3,7 @@ import shutil
 import platform
 from Victory.victory import play_victory
 from Buyer.buyer import start_buyer
+
 current_path = os.path.abspath(os.getcwd())
 
 
@@ -15,7 +16,8 @@ def remove_folder(path):
     if not os.path.isdir(path):
         shutil.rmtree(path)
 
-def copy_folder(src,dst):
+
+def copy_folder(src, dst):
     shutil.copytree(src, dst, dirs_exist_ok=True)
 
 
@@ -44,21 +46,21 @@ while True:
     choice = input('Выберите пункт меню ')
     if choice == '1':
         name_folder = input("Введите имя папки или файла для создания ")
-        create_folder(os.path.join(current_path,name_folder))
+        create_folder(os.path.join(current_path, name_folder))
     elif choice == '2':
         name_folder = input("Введите имя папки или файла для удаления ")
-        remove_folder(os.path.join(current_path,name_folder))
+        remove_folder(os.path.join(current_path, name_folder))
     elif choice == '3':
         name_folder_src = input("Введите имя папки которую надо скопировать ")
         name_folder_dst = input("Введите имя папки в которую надо скопировать ")
-        copy_folder(os.path.join(current_path,name_folder_src), os.path.join(current_path,name_folder_dst))
+        copy_folder(os.path.join(current_path, name_folder_src), os.path.join(current_path, name_folder_dst))
     elif choice == '4':
-        show_folder(current_path,True,True)
+        show_folder(current_path, True, True)
     elif choice == '5':
         show_folder(current_path, False, True)
     elif choice == '6':
         show_folder(current_path, True, False)
-    elif choice=='7':
+    elif choice == '7':
         print(platform.platform())
     elif choice == '8':
         print("Created: Max")
@@ -67,7 +69,7 @@ while True:
     elif choice == '10':
         start_buyer()
     elif choice == '11':
-        path_dir=input("Введите новый путь для рабочей директории " )
+        path_dir = input("Введите новый путь для рабочей директории ")
         if os.path.exists(path_dir):
             current_path = path_dir
         else:
