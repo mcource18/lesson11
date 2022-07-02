@@ -27,11 +27,18 @@
 При выполнении задания можно пользоваться любыми средствами
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
-
+import os
+import pickle
 
 class Buyer:
     __account = 0
     __list_shop = {}
+    __file_name='data.pickle'
+
+    def __init__(self):
+        if os.path.exists(self.__file_name):
+            with open(self.__file_name, 'rb') as f:
+                self.__account, self.__list_shop = pickle.load(f)
 
     def add(self, sum):
         self.__account += sum
@@ -49,12 +56,16 @@ class Buyer:
         self.__account -= sum
 
     def history(self):
-        for key, val in self.__list_shop.items():
-            print(f'{key} - {val}')
+        return self.__list_shop.items()
+
+    def write(self):
+        with open(self.__file_name, 'wb') as f:
+            pickle.dump([self.__account,self.__list_shop], f)
+
 
 
 def start_buyer():
-    buyer=Buyer()
+    buyer = Buyer()
     while True:
         print('1. пополнение счета')
         print('2. покупка')
@@ -63,14 +74,16 @@ def start_buyer():
 
         choice = input('Выберите пункт меню ')
         if choice == '1':
-            sum=input("Введит сумму для пополнения счета ")
+            sum = input("Введит сумму для пополнения счета ")
             buyer.add(int(sum))
         elif choice == '2':
             sum = input("Введит сумму для покупки ")
             buyer.buy(int(sum))
         elif choice == '3':
-            buyer.history()
+             for key,val in buyer.history():
+                 print(f'{key} - {val}')
         elif choice == '4':
+            buyer.write()
             break
         else:
             print('Неверный пункт меню')
