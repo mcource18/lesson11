@@ -6,7 +6,6 @@ from Buyer.buyer import start_buyer
 
 current_path = os.path.abspath(os.getcwd())
 
-
 def create_folder(path):
     if not os.path.isdir(path):
         os.mkdir(path)
@@ -22,15 +21,21 @@ def copy_folder(src, dst):
 
 
 def show_folder(path, show_file=True, show_dir=True):
-    dict_folder = {
-        'filenames': [],
-        'dirs': []
-    }
-    for name in os.listdir(path):
-        if os.path.isfile(os.path.join(path, name)) and show_file:
-            dict_folder['filenames'].append(name)
-        if os.path.isdir(os.path.join(path, name)) and show_dir:
-            dict_folder['dirs'].append(name)
+    try:
+        dict_folder = {
+            'filenames': [],
+            'dirs': []
+        }
+        for name in os.listdir(path):
+             name = name if os.path.isfile(os.path.join(path, name)) and show_file else None
+             if (name != None):
+                 dict_folder['filenames'].append(name)
+
+             name = name if os.path.isdir(os.path.join(path, name)) and show_dir else None
+             if (name != None):
+                dict_folder['dirs'].append(name)
+    except Exception as exc:
+        print("Error:"+str(exc))
     return dict_folder
 
 while True:

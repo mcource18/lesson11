@@ -36,9 +36,12 @@ class Buyer:
     __file_name='data.pickle'
 
     def __init__(self):
-        if os.path.exists(self.__file_name):
-            with open(self.__file_name, 'rb') as f:
-                self.__account, self.__list_shop = pickle.load(f)
+        try:
+            if os.path.exists(self.__file_name):
+                with open(self.__file_name, 'rb') as f:
+                    self.__account, self.__list_shop = pickle.load(f)
+        except:
+            print("Error read file")
 
     def add(self, sum):
         self.__account += sum
@@ -59,8 +62,12 @@ class Buyer:
         return self.__list_shop.items()
 
     def write(self):
-        with open(self.__file_name, 'wb') as f:
-            pickle.dump([self.__account,self.__list_shop], f)
+        try:
+            with open(self.__file_name, 'wb') as f:
+                pickle.dump([self.__account,self.__list_shop], f)
+        except:
+            print("Error write file")
+
 
 
 
